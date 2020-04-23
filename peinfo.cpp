@@ -40,15 +40,12 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	PIMAGE_THUNK_DATA P_THUNK = reinterpret_cast<PIMAGE_THUNK_DATA>
 		(reinterpret_cast<BYTE*>(P_DOS_HEADER) + P_IMPORT_DESCRIPTOR->FirstThunk);
 
-
 	std::cout << "Getting information about PE (loaded in RAM)!!\n\n";
-
 	std::cout << "------------------\n";
 	std::cout << " IMAGE_DOS_HEADER \n";
 	std::cout << "------------------\n";
 	std::cout << "E_magic (MZ) : \t\t\t0x" << std::hex << std::uppercase << P_DOS_HEADER->e_magic << "\n"; //Determina o formato PE
 	std::cout << "E_lfanew: \t\t\t0x" << std::hex << P_DOS_HEADER->e_lfanew << "\n\n"; //Deslocamento para a struct IMAGE_NT_HEADER
-
 	std::cout << "-----------------\n";
 	std::cout << " IMAGE_NT_HEADER \n";
 	std::cout << "-----------------\n";
@@ -56,7 +53,6 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "IMAGE_NT_HEADER: \t\t0x" << std::hex << (DWORD64) P_NT_HEADER << "\n"; //Endereço para a struct IMAGE_NT_HEADER
 	std::cout << "IMAGE_FILE_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->FileHeader << "\n"; //Endereço para a struct IMAGE_FILE_HEADER
 	std::cout << "IMAGE_OPTIONAL_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->OptionalHeader << "\n\n"; //Endereço para a struct IMAGE_OPTIONAL_HEADER
-
 	std::cout << "-------------------\n";
 	std::cout << " IMAGE_FILE_HEADER \n";
 	std::cout << "-------------------\n";
@@ -162,24 +158,25 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 }
 
 BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
-    switch (fdwReason) {
-        case DLL_PROCESS_ATTACH:
-        	CreateThread(0, 0, &inicializa, 0, 0, 0);
-            // attach to process
-            // return FALSE to fail DLL load
-            break;
+	switch (fdwReason) {
+		case DLL_PROCESS_ATTACH:
+			CreateThread(0, 0, &inicializa, 0, 0, 0);
+			// attach to process
+			// return FALSE to fail DLL load
+			break;
 
-        case DLL_PROCESS_DETACH:
-            // detach from process
-            break;
+		case DLL_PROCESS_DETACH:
+			// detach from process
+			break;
 
-        case DLL_THREAD_ATTACH:
-            // attach to thread
-            break;
+		case DLL_THREAD_ATTACH:
+			// attach to thread
+			break;
 
-        case DLL_THREAD_DETACH:
-            // detach from thread
-            break;
-    }
-    return TRUE; // succesful
+        	case DLL_THREAD_DETACH:
+			// detach from thread
+			break;
+	}
+	
+	return TRUE;
 }
