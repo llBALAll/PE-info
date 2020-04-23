@@ -74,8 +74,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	const auto time = localtime(&time_date_stamp);
 	strftime(b, sizeof(b), "%D", time);
 
-
-	std::cout << "Date Compilation: \t\t" << b << "\n"; //data de compilação do binário
+	std::cout << "Build date: \t\t" << b << "\n"; //data de compilação do binário
 	std::cout << "Pointer to Symbol Table: \t0x" << std::hex << P_NT_HEADER->FileHeader.PointerToSymbolTable << "\n";
 	std::cout << "Number of Symbols: \t\t0x" << std::dec << P_NT_HEADER->FileHeader.NumberOfSymbols << "\n";
 	std::cout << "Size of Optional Header: \t" << std::dec << P_NT_HEADER->FileHeader.SizeOfOptionalHeader << " B\n";
