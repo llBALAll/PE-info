@@ -46,13 +46,13 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "------------------\n";
 	std::cout << " IMAGE_DOS_HEADER \n";
 	std::cout << "------------------\n";
-	std::cout << "E_magic (MZ) : \t\t\t0x" << std::hex << std::uppercase << P_DOS_HEADER->e_magic << "\n"; // Determina o formato PE
+	std::cout << "E_magic (MZ) : \t\t\t0x" << std::hex << std::uppercase << P_DOS_HEADER->e_magic << "\n"; //Determina o formato PE
 	std::cout << "E_lfanew: \t\t\t0x" << std::hex << P_DOS_HEADER->e_lfanew << "\n\n"; //Deslocamento para a struct IMAGE_NT_HEADER
 
 	std::cout << "-----------------\n";
 	std::cout << " IMAGE_NT_HEADER \n";
 	std::cout << "-----------------\n";
-	std::cout << "Signature: \t\t\t" << (char*)(P_NT_HEADER) << "\n"; //IMAGE_NT_HEADERS ( PE )
+	std::cout << "Signature: \t\t\t" << (char*)(P_NT_HEADER) << "\n"; //IMAGE_NT_HEADERS (PE)
 	std::cout << "IMAGE_NT_HEADER: \t\t0x" << std::hex << (DWORD64) P_NT_HEADER << "\n"; //Endereço para a struct IMAGE_NT_HEADER
 	std::cout << "IMAGE_FILE_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->FileHeader << "\n"; //Endereço para a struct IMAGE_FILE_HEADER
 	std::cout << "IMAGE_OPTIONAL_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->OptionalHeader << "\n\n"; //Endereço para a struct IMAGE_OPTIONAL_HEADER
@@ -63,9 +63,9 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "Machine Supports:";
 
 	if (P_NT_HEADER->FileHeader.Machine == IMAGE_FILE_MACHINE_I386)
-		std::cout <<  "\t\tMachine: Intel 386 or later processor and compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
+		std::cout <<  "\t\tMachine: Intel 386 or later compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
 	else
-		std::cout << "\t\tMachine: Intel x64 or later processor and compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
+		std::cout << "\t\tMachine: Intel x64 or later compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
 
 	std::cout << "Number of Sections: \t\t" << std::dec << P_NT_HEADER->FileHeader.NumberOfSections << "\n";
 
@@ -75,7 +75,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 		strftime(b, sizeof(b), "%D", time);
 	}
 
-	std::cout << "Date Compilation: \t\t" << b << "\n"; //Exibe a data de compilação do binário
+	std::cout << "Date Compilation: \t\t" << b << "\n"; //data de compilação do binário
 	std::cout << "Pointer to Symbol Table: \t0x" << std::hex << P_NT_HEADER->FileHeader.PointerToSymbolTable << "\n";
 	std::cout << "Number of Symbols: \t\t0x" << std::dec << P_NT_HEADER->FileHeader.NumberOfSymbols << "\n";
 	std::cout << "Size of Optional Header: \t" << std::dec << P_NT_HEADER->FileHeader.SizeOfOptionalHeader << " B\n";
@@ -100,7 +100,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "\n-----------------------";
 	std::cout << "\n IMAGE_OPTIONAL_HEADER ";
 	std::cout << "\n-----------------------\n";
-	std::cout << "Magic: \t\t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.Magic << "\n"; //Identificaçao do tipo de IMAGEM
+	std::cout << "Magic: \t\t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.Magic << "\n"; //tipo de IMAGEM
 	std::cout << "MajorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MajorLinkerVersion) << "\n";
 	std::cout << "MinorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MinorLinkerVersion) << "\n";
 	std::cout << "SizeOfCode: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfCode << " B\n";
@@ -108,7 +108,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "SizeOfUnitializedData: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfUninitializedData << " B\n";
 	std::cout << "AddressOfEntryPoint: \t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.AddressOfEntryPoint << "\n"; //RVA do entry point
 	std::cout << "BaseOfCode: \t\t\t0x" << P_NT_HEADER->OptionalHeader.BaseOfCode << "\n"; //RVA da secao code (.text)
-	//std::cout << "BaseOfData: 0x" << P_IMAGE_OPTIONAL_HEADER->BaseOfData << "\n"; //RVA e para a secao de dados (.data)
+	//std::cout << "BaseOfData: 0x" << P_IMAGE_OPTIONAL_HEADER->BaseOfData << "\n"; //RVA da secao de dados (.data)
 	std::cout << "ImageBase: \t\t\t0x" << P_NT_HEADER->OptionalHeader.ImageBase << "\n"; //ImageBase do binario
 	std::cout << "SectionAlignment: \t\t0x" << P_NT_HEADER->OptionalHeader.SectionAlignment << "\n"; //Alinhamento das secoes em bytes
 	std::cout << "FileAlignment: \t\t\t0x" << P_NT_HEADER->OptionalHeader.FileAlignment << "\n";
@@ -150,12 +150,12 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_GUARD_CF) std::cout << "  # Image supports Control Flow Guard\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE) std::cout << "  # Indicate that your application is Remote Desktop Services aware\n";
 
-	std::cout << "SizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n"; //Espaco reservado para a stack (pilha)
+	std::cout << "SizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n"; //Espaco reservado para a stack
 	std::cout << "SizeOfStackCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackCommit << " B\n";
 	std::cout << "SizeOfHeapReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapReserve << " B\n"; 
 	std::cout << "SizeOfHeapCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapCommit << " B\n"; 
 	std::cout << "LoaderFlags: \t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.LoaderFlags << "\n";
-	std::cout << "NumberOfRVAandSizes: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.NumberOfRvaAndSizes << " B\n\n\n"; //Numero de entradadas do DataDirectory
+	std::cout << "NumberOfRVAandSizes: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.NumberOfRvaAndSizes << " B\n\n\n"; //Numero de entradas do DataDirectory
 
 
 	system("pause");
