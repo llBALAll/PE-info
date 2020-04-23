@@ -3,7 +3,6 @@
 #include "peinfo.hpp"
 
 BOOL createConsole() {
-
 	if (!AllocConsole()) {
 		printf("error => can not AllocConsole\n");
 		return FALSE;
@@ -17,7 +16,6 @@ BOOL createConsole() {
 }
 
 DWORD WINAPI getPEinfo(LPVOID lpParam) {
-
 	if (!createConsole()) {
 		printf("error => AllocConsole\n");
 		return EXIT_FAILURE;
