@@ -1,11 +1,11 @@
-// inject the dll parser on PE according the binary architecture(x86/x64), and a console will open printing information
+// inject dll generated on process according the architecture(x86/x64), and a console will open printing information
 
 #include "peinfo.hpp"
 
-BOOL alocConsole() {
+BOOL createConsole() {
 
 	if (!AllocConsole()) {
-		printf("error => AllocConsole\n");
+		printf("error => can not AllocConsole\n");
 		return FALSE;
 	}
 	FILE* fDummy;
@@ -16,9 +16,9 @@ BOOL alocConsole() {
 	return TRUE;
 }
 
-DWORD WINAPI inicializa(LPVOID lpParam) {
+DWORD WINAPI getPEinfo(LPVOID lpParam) {
 
-	if (!alocConsole()) {
+	if (!createConsole()) {
 		printf("error => AllocConsole\n");
 		return EXIT_FAILURE;
 	}
@@ -44,7 +44,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "------------------\n";
 	std::cout << " IMAGE_DOS_HEADER \n";
 	std::cout << "------------------\n";
-	std::cout << "E_magic (MZ) : \t\t\t0x" << std::hex << std::uppercase << P_DOS_HEADER->e_magic << "\n"; //Determina o formato PE
+	std::cout << "E_magic (MZ): \t\t\t0x" << std::hex << std::uppercase << P_DOS_HEADER->e_magic << "\n"; //Determina o formato PE
 	std::cout << "E_lfanew: \t\t\t0x" << std::hex << P_DOS_HEADER->e_lfanew << "\n\n"; //Deslocamento para a struct IMAGE_NT_HEADER
 	std::cout << "-----------------\n";
 	std::cout << " IMAGE_NT_HEADER \n";
@@ -70,7 +70,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	const auto time = localtime(&time_date_stamp);
 	strftime(b, sizeof(b), "%D", time);
 
-	std::cout << "Build date: \t\t" << b << "\n"; //data de compilação do binário
+	std::cout << "Build date: \t\t\t" << b << "\n"; //data de compilação do binário
 	std::cout << "Pointer to Symbol Table: \t0x" << std::hex << P_NT_HEADER->FileHeader.PointerToSymbolTable << "\n";
 	std::cout << "Number of Symbols: \t\t0x" << std::dec << P_NT_HEADER->FileHeader.NumberOfSymbols << "\n";
 	std::cout << "Size of Optional Header: \t" << std::dec << P_NT_HEADER->FileHeader.SizeOfOptionalHeader << " B\n";
@@ -134,9 +134,9 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 
 	std::cout << "\nDllCharacteristics: \t\t" << P_NT_HEADER->OptionalHeader.DllCharacteristics << "\n\n"; //Como nao e um .exe o campo estara ZERADO
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA) std::cout << "  # Image can handle a high entropy 64-bit virtual address space\n";
-	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE) std::cout << "  # DLL can move\n";
+	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE) std::cout << "  # DLL can move (ASLR)\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY) std::cout << "  # Code Integrity Image\n";
-	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_NX_COMPAT) std::cout << "  # Image is NX compatible\n";
+	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_NX_COMPAT) std::cout << "  # Image is NX compatible (DEP)\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_NO_ISOLATION) std::cout << "  # Image understands isolation and doesn't want it\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_NO_SEH) std::cout << "  # Image does not use SEH.  No SE handler may reside in this image\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_NO_BIND) std::cout << "  # Do not bind this image\n";
@@ -160,7 +160,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 	switch (fdwReason) {
 		case DLL_PROCESS_ATTACH:
-			CreateThread(0, 0, &inicializa, 0, 0, 0);
+			CreateThread(0, 0, &getPEinfo, 0, 0, 0);
 			// attach to process
 			// return FALSE to fail DLL load
 			break;
