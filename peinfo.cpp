@@ -1,4 +1,4 @@
-// inject dll generated on process according the architecture(x86/x64), and a console will open printing information
+// inject dll on process according the architecture(x86/x64), and a console will open printing information
 
 #include "peinfo.hpp"
 
