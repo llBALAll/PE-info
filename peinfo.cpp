@@ -39,42 +39,8 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	PIMAGE_THUNK_DATA P_THUNK = reinterpret_cast<PIMAGE_THUNK_DATA>
 		(reinterpret_cast<BYTE*>(P_DOS_HEADER) + P_IMPORT_DESCRIPTOR->FirstThunk);
 
-/* 
-	std::cout << "----- testes: \n\n";
 
-	std::cout << "P_DOS_HEADER: \t\t\t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) P_DOS_HEADER << "\n";
-	std::cout << "&P_DOS_HEADER->e_magic: \t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) &P_DOS_HEADER->e_magic << "\n";
-	std::cout << "P_DOS_HEADER->e_magic: \t\t\t\t\t" << std::hex << std::uppercase << (DWORD64) P_DOS_HEADER->e_magic << "\n";
-	std::cout << "&P_DOS_HEADER->e_lfanew: \t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) &P_DOS_HEADER->e_lfanew << "\n";
-	std::cout << "P_DOS_HEADER->e_lfanew: \t\t\t\t" << std::hex << std::uppercase << (DWORD64) P_DOS_HEADER->e_lfanew << "\n";
-	std::cout << "(BYTE*)P_DOS_HEADER: \t\t\t\t\t" << std::hex << std::uppercase << (BYTE*)P_DOS_HEADER << "\n";
-
-	std::cout << "P_NT_HEADER: \t\t\t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) P_NT_HEADER << "\n";
-	std::cout << "&P_NT_HEADER->Signature: \t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) &P_NT_HEADER->Signature << "\n";
-	std::cout << "P_NT_HEADER->Signature: \t\t\t\t0x" << std::uppercase << P_NT_HEADER->Signature << "\n";
-
-	std::cout << "&P_NT_HEADER->FileHeader: \t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) &P_NT_HEADER->FileHeader << "\n";
-	std::cout << "&P_NT_HEADER->FileHeader.Characteristics: \t\t0x" << std::hex << std::uppercase << (DWORD64) &P_NT_HEADER->FileHeader.Characteristics << "\n";
-	std::cout << "P_NT_HEADER->FileHeader.Characteristics: \t\t0x" << std::hex << std::uppercase << (DWORD64) P_NT_HEADER->FileHeader.Characteristics << "\n";
-
-	std::cout << "&P_NT_HEADER->OptionalHeader: \t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) &P_NT_HEADER->OptionalHeader << "\n";
-	std::cout << "P_NT_HEADER->OptionalHeader->Magic: \t\t\t0x" << std::hex << std::uppercase << P_NT_HEADER->OptionalHeader.Magic << "\n";
-	std::cout << "&P_NT_HEADER->OptionalHeader.AddressOfEntryPoint: \t0x" << std::hex << std::uppercase << (DWORD64) &P_NT_HEADER->OptionalHeader.AddressOfEntryPoint << "\n";
-	std::cout << "P_NT_HEADER->OptionalHeader.AddressOfEntryPoint: \t0x" << std::hex << std::uppercase << (DWORD64) P_NT_HEADER->OptionalHeader.AddressOfEntryPoint << "\n";
-	std::cout << "P_NT_HEADER->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress: 0x" << std::hex << std::uppercase << P_NT_HEADER->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress << "\n";
-
-	std::cout << "P_EXPORT_DIRECTORY: \t\t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) P_EXPORT_DIRECTORY << "\n";
-	std::cout << "(BYTE*)P_EXPORT_DIRECTORY: \t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) P_EXPORT_DIRECTORY << "\n";
-	std::cout << "&P_EXPORT_DIRECTORY->Base: \t\t\t\t0x" << std::hex << std::uppercase << (DWORD64) &P_EXPORT_DIRECTORY->Base << "\n";
-	std::cout << "P_EXPORT_DIRECTORY->Base: \t\t\t\t" << std::hex << std::uppercase << P_EXPORT_DIRECTORY->Base << "\n";
-	std::cout << "&P_EXPORT_DIRECTORY->AddressOfFunctions: \t\t0x" << std::hex << std::uppercase << (DWORD64) &P_EXPORT_DIRECTORY->AddressOfFunctions << "\n";
-	std::cout << "P_EXPORT_DIRECTORY->AddressOfFunctions: \t\t" << std::hex << std::uppercase << P_EXPORT_DIRECTORY->AddressOfFunctions << "\n";
-
-	std::cout << "----- \n\n";
- */
-
-
-	std::cout << "Getting information from the PE format!!!\n\n";
+	std::cout << "Getting information about PE (loaded in RAM)!!\n\n";
 
 	std::cout << "------------------\n";
 	std::cout << " IMAGE_DOS_HEADER \n";
@@ -86,9 +52,9 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << " IMAGE_NT_HEADER \n";
 	std::cout << "-----------------\n";
 	std::cout << "Signature: \t\t\t" << (char*)(P_NT_HEADER) << "\n"; //IMAGE_NT_HEADERS ( PE )
-	std::cout << "IMAGE_NT_HEADER: \t\t0x" << std::hex << (DWORD64) P_NT_HEADER << "\n"; //Endereço para a struct IMAGE_NT_HEADER
-	std::cout << "IMAGE_FILE_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->FileHeader << "\n"; //Endereço para a struct IMAGE_FILE_HEADER
-	std::cout << "IMAGE_OPTIONAL_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->OptionalHeader << "\n\n"; //Endereço para a struct IMAGE_OPTIONAL_HEADER
+	std::cout << "IMAGE_NT_HEADER: \t\t0x" << std::hex << (DWORD64) P_NT_HEADER << "\n"; //EndereÃ§o para a struct IMAGE_NT_HEADER
+	std::cout << "IMAGE_FILE_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->FileHeader << "\n"; //EndereÃ§o para a struct IMAGE_FILE_HEADER
+	std::cout << "IMAGE_OPTIONAL_HEADER: \t\t0x" << (DWORD64) &P_NT_HEADER->OptionalHeader << "\n\n"; //EndereÃ§o para a struct IMAGE_OPTIONAL_HEADER
 
 	std::cout << "-------------------\n";
 	std::cout << " IMAGE_FILE_HEADER \n";
@@ -100,7 +66,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	else
 		std::cout << "\t\tMachine: Intel x64 or later processor and compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
 
-	std::cout << "Number of Sections: \t\t" << std::dec << P_NT_HEADER->FileHeader.NumberOfSections << "\n"; //Determina o número de seções do binário
+	std::cout << "Number of Sections: \t\t" << std::dec << P_NT_HEADER->FileHeader.NumberOfSections << "\n"; //Determina o nÃºmero de seÃ§Ãµes do binÃ¡rio
 
 	char b[20];	{
 		time_t time_date_stamp = P_NT_HEADER->FileHeader.TimeDateStamp;
@@ -108,9 +74,9 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 		strftime(b, sizeof(b), "%D", time);
 	}
 
-	std::cout << "Date Compilation: \t\t" << b << "\n"; //Exibe a data de compilação do binário
+	std::cout << "Date Compilation: \t\t" << b << "\n"; //Exibe a data de compilaÃ§Ã£o do binÃ¡rio
 	std::cout << "Pointer to Symbol Table: \t0x" << std::hex << P_NT_HEADER->FileHeader.PointerToSymbolTable << "\n"; //Ponteiro para a Symbol Table
-	std::cout << "Number of Symbols: \t\t0x" << std::dec << P_NT_HEADER->FileHeader.NumberOfSymbols << "\n"; //Número de symbols..
+	std::cout << "Number of Symbols: \t\t0x" << std::dec << P_NT_HEADER->FileHeader.NumberOfSymbols << "\n"; //NÃºmero de symbols..
 	std::cout << "Size of Optional Header: \t" << std::dec << P_NT_HEADER->FileHeader.SizeOfOptionalHeader << " B\n"; //Tamanho do IMAGE_OPTIONAL_HEADER
 
 	std::cout << "Characteristics: \t\t0x" << std::hex << std::uppercase << P_NT_HEADER->FileHeader.Characteristics << "\n\n";
@@ -133,7 +99,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "\n-----------------------";
 	std::cout << "\n IMAGE_OPTIONAL_HEADER ";
 	std::cout << "\n-----------------------\n";
-	std::cout << "Magic: \t\t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.Magic << "\n"; //Identificaçao do tipo de IMAGEM
+	std::cout << "Magic: \t\t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.Magic << "\n"; //IdentificaÃ§ao do tipo de IMAGEM
 	std::cout << "MajorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MajorLinkerVersion) << "\n"; //Maior versao do link
 	std::cout << "MinorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MinorLinkerVersion) << "\n"; //Menor versao do link
 	std::cout << "SizeOfCode: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfCode << " B\n"; //Tamanho da secao CODE ( Normalmente .text nas aplicacoes por ai )
