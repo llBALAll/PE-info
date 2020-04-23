@@ -63,11 +63,11 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "Machine Supports:";
 
 	if (P_NT_HEADER->FileHeader.Machine == IMAGE_FILE_MACHINE_I386)
-		std::cout <<  "\t\tMachine: Intel 386 or later processor and compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n"; //Compatibilidade
+		std::cout <<  "\t\tMachine: Intel 386 or later processor and compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
 	else
 		std::cout << "\t\tMachine: Intel x64 or later processor and compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
 
-	std::cout << "Number of Sections: \t\t" << std::dec << P_NT_HEADER->FileHeader.NumberOfSections << "\n"; //Determina o número de seções do binário
+	std::cout << "Number of Sections: \t\t" << std::dec << P_NT_HEADER->FileHeader.NumberOfSections << "\n";
 
 	char b[20];	{
 		time_t time_date_stamp = P_NT_HEADER->FileHeader.TimeDateStamp;
@@ -76,52 +76,52 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	}
 
 	std::cout << "Date Compilation: \t\t" << b << "\n"; //Exibe a data de compilação do binário
-	std::cout << "Pointer to Symbol Table: \t0x" << std::hex << P_NT_HEADER->FileHeader.PointerToSymbolTable << "\n"; //Ponteiro para a Symbol Table
-	std::cout << "Number of Symbols: \t\t0x" << std::dec << P_NT_HEADER->FileHeader.NumberOfSymbols << "\n"; //Número de symbols..
-	std::cout << "Size of Optional Header: \t" << std::dec << P_NT_HEADER->FileHeader.SizeOfOptionalHeader << " B\n"; //Tamanho do IMAGE_OPTIONAL_HEADER
+	std::cout << "Pointer to Symbol Table: \t0x" << std::hex << P_NT_HEADER->FileHeader.PointerToSymbolTable << "\n";
+	std::cout << "Number of Symbols: \t\t0x" << std::dec << P_NT_HEADER->FileHeader.NumberOfSymbols << "\n";
+	std::cout << "Size of Optional Header: \t" << std::dec << P_NT_HEADER->FileHeader.SizeOfOptionalHeader << " B\n";
 
 	std::cout << "Characteristics: \t\t0x" << std::hex << std::uppercase << P_NT_HEADER->FileHeader.Characteristics << "\n\n";
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_RELOCS_STRIPPED) std::cout << "  # The file does not contain base relocations\n"; //Sem info de reloc ...
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_EXECUTABLE_IMAGE) std::cout << "  # The image file is valid and can be run\n"; //Define um executavel
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_LINE_NUMS_STRIPPED) std::cout << "  # COFF line numbers have been removed\n"; //Obsoleto e deve ser ZERO
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_LOCAL_SYMS_STRIPPED) std::cout << "  # COFF symbol table entries for local symbols have been removed\n"; // Obsoleto e deve ser ZERO
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_AGGRESIVE_WS_TRIM) std::cout << "  # Aggressively trim working set\n"; //Obsoleto para Win 2000 e posterior e deve ser ZERO
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_LARGE_ADDRESS_AWARE) std::cout << "  # Application can handle > 2 GB addresses\n"; //Aplicacao consegue trabalhar com maior que 2 GB de enderecos
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_32BIT_MACHINE) std::cout << "  # Machine is based on a 32-bit-word architecture\n"; //32-bit arquitetura
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_DEBUG_STRIPPED) std::cout << "  # Debugging information is removed from the image file\n"; //Remove info de depuracao
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP) std::cout << "  # If the image is on removable media, fully load it and copy it to the swap file\n"; //Se estiver em midia removivel carregue e copie para arquivo de troca
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_NET_RUN_FROM_SWAP) std::cout << "  # If the image is on network media, fully load it and copy it to the swap file\n"; //Se estiver na rede carregue e copie para arquivo de troca
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_SYSTEM) std::cout << "  # The image file is a system file, not a user program\n"; //Arquivo de imagem pertence ao sistema e nao ao user
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_DLL) std::cout << "  # The image file is a dynamic-link library (DLL)\n"; //Considerado um arquivo executavel porem nao diretamente
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_UP_SYSTEM_ONLY) std::cout << "  # The file should be run only on a uniprocessor machine\n"; //Arquivo so pode ser executado em um unico processador
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_BYTES_REVERSED_LO) std::cout << "  # Little endian\n"; //Obsoleto e deve ser ZERO
-	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_BYTES_REVERSED_HI) std::cout << "  # Big endian\n"; //Obsoleto e deve ser ZERO
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_RELOCS_STRIPPED) std::cout << "  # The file does not contain base relocations\n"; 
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_EXECUTABLE_IMAGE) std::cout << "  # The image file is valid and can be run\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_LINE_NUMS_STRIPPED) std::cout << "  # COFF line numbers have been removed\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_LOCAL_SYMS_STRIPPED) std::cout << "  # COFF symbol table entries for local symbols have been removed\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_AGGRESIVE_WS_TRIM) std::cout << "  # Aggressively trim working set\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_LARGE_ADDRESS_AWARE) std::cout << "  # Application can handle > 2 GB addresses\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_32BIT_MACHINE) std::cout << "  # Machine is based on a 32-bit-word architecture\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_DEBUG_STRIPPED) std::cout << "  # Debugging information is removed from the image file\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP) std::cout << "  # If the image is on removable media, fully load it and copy it to the swap file\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_NET_RUN_FROM_SWAP) std::cout << "  # If the image is on network media, fully load it and copy it to the swap file\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_SYSTEM) std::cout << "  # The image file is a system file, not a user program\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_DLL) std::cout << "  # The image file is a dynamic-link library (DLL)\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_UP_SYSTEM_ONLY) std::cout << "  # The file should be run only on a uniprocessor machine\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_BYTES_REVERSED_LO) std::cout << "  # Little endian\n";
+	if (P_NT_HEADER->FileHeader.Characteristics & IMAGE_FILE_BYTES_REVERSED_HI) std::cout << "  # Big endian\n"; 
 
 	std::cout << "\n-----------------------";
 	std::cout << "\n IMAGE_OPTIONAL_HEADER ";
 	std::cout << "\n-----------------------\n";
 	std::cout << "Magic: \t\t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.Magic << "\n"; //Identificaçao do tipo de IMAGEM
-	std::cout << "MajorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MajorLinkerVersion) << "\n"; //Maior versao do link
-	std::cout << "MinorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MinorLinkerVersion) << "\n"; //Menor versao do link
-	std::cout << "SizeOfCode: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfCode << " B\n"; //Tamanho da secao CODE ( Normalmente .text nas aplicacoes por ai )
-	std::cout << "SizeOfInitializedData: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfInitializedData << " B\n"; //Tamanho da secao DATA ( Normalmente .data nas aplicacoes por ai )
+	std::cout << "MajorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MajorLinkerVersion) << "\n";
+	std::cout << "MinorLinkVersion: \t\t" << reinterpret_cast<int*>(P_NT_HEADER->OptionalHeader.MinorLinkerVersion) << "\n";
+	std::cout << "SizeOfCode: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfCode << " B\n";
+	std::cout << "SizeOfInitializedData: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfInitializedData << " B\n";
 	std::cout << "SizeOfUnitializedData: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfUninitializedData << " B\n";
-	std::cout << "AddressOfEntryPoint: \t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.AddressOfEntryPoint << "\n"; //RVA do entry point no caso em relacao ao ImageBase ( 0x400000 )
-	std::cout << "BaseOfCode: \t\t\t0x" << P_NT_HEADER->OptionalHeader.BaseOfCode << "\n"; //RVA do comeco da secao code ( .text )
-	//std::cout << "BaseOfData: 0x" << P_IMAGE_OPTIONAL_HEADER->BaseOfData << "\n"; //O nome da diz e a mesma coisa acima porem o RVA e para a secao de dados ( .data )
-	std::cout << "ImageBase: \t\t\t0x" << P_NT_HEADER->OptionalHeader.ImageBase << "\n"; //ImageBase do binario, no caso quando uma aplicacao e executada ela recebe um valor inicial de memoria ( 0x400000 )
+	std::cout << "AddressOfEntryPoint: \t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.AddressOfEntryPoint << "\n"; //RVA do entry point
+	std::cout << "BaseOfCode: \t\t\t0x" << P_NT_HEADER->OptionalHeader.BaseOfCode << "\n"; //RVA da secao code (.text)
+	//std::cout << "BaseOfData: 0x" << P_IMAGE_OPTIONAL_HEADER->BaseOfData << "\n"; //RVA e para a secao de dados (.data)
+	std::cout << "ImageBase: \t\t\t0x" << P_NT_HEADER->OptionalHeader.ImageBase << "\n"; //ImageBase do binario
 	std::cout << "SectionAlignment: \t\t0x" << P_NT_HEADER->OptionalHeader.SectionAlignment << "\n"; //Alinhamento das secoes em bytes
-	std::cout << "FileAlignment: \t\t\t0x" << P_NT_HEADER->OptionalHeader.FileAlignment << "\n"; //Alinhamento das secoes de dados e caso o SectionAlignment seja menor que o size de uma pagina ela vai possuir o mesmo tamanho da FileAlignment
-	std::cout << "MajorImageVersion: \t\t" << P_NT_HEADER->OptionalHeader.MajorImageVersion << "\n"; //Indicam o maior tamanho da image
-	std::cout << "MinorImageVersion: \t\t" << P_NT_HEADER->OptionalHeader.MinorImageVersion << "\n"; //Indicam o menor tamanho da image ( No caso sao 2 WORDS )
-	std::cout << "MajorSubsystemVersion: \t\t" << P_NT_HEADER->OptionalHeader.MajorSubsystemVersion << "\n"; //Indica o maior tamanho da subsystem
-	std::cout << "MinorSubsystemVersion: \t\t" << P_NT_HEADER->OptionalHeader.MinorSubsystemVersion << "\n"; //Indica o menor tamanho da Subsystem e isso vai influenciar como uma aplicacao roda ( questao grafica por ex... )
-	std::cout << "Win32VersionValue: \t\t" << P_NT_HEADER->OptionalHeader.Win32VersionValue << "\n"; //A principio e sempre ZERO
+	std::cout << "FileAlignment: \t\t\t0x" << P_NT_HEADER->OptionalHeader.FileAlignment << "\n";
+	std::cout << "MajorImageVersion: \t\t" << P_NT_HEADER->OptionalHeader.MajorImageVersion << "\n";
+	std::cout << "MinorImageVersion: \t\t" << P_NT_HEADER->OptionalHeader.MinorImageVersion << "\n";
+	std::cout << "MajorSubsystemVersion: \t\t" << P_NT_HEADER->OptionalHeader.MajorSubsystemVersion << "\n";
+	std::cout << "MinorSubsystemVersion: \t\t" << P_NT_HEADER->OptionalHeader.MinorSubsystemVersion << "\n";
+	std::cout << "Win32VersionValue: \t\t" << P_NT_HEADER->OptionalHeader.Win32VersionValue << "\n";
 	std::cout << "SizeOfImage: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfImage << " B\n"; //Tamanho total da Image quando carregada na memoria
 	std::cout << "SizeOfHeader: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeaders << " B\n"; //Tamanho de todos cabecalhos data, code, etc..
 	std::cout << "CheckSum: \t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.CheckSum << "\n"; //So e checada se a image for um Driver NT
 
-	std::cout << "Subsystem: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.Subsystem << std::hex << "\n\n"; //Espera o subsystem adequado para executar a imagem
+	std::cout << "Subsystem: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.Subsystem << std::hex << "\n\n";
 	if (P_NT_HEADER->OptionalHeader.Subsystem & IMAGE_SUBSYSTEM_UNKNOWN) std::cout << "  # An unknown subsystem\n";
 	if (P_NT_HEADER->OptionalHeader.Subsystem & IMAGE_SUBSYSTEM_NATIVE) std::cout << "  # Device drivers and native Windows processe\n";
 	if (P_NT_HEADER->OptionalHeader.Subsystem & IMAGE_SUBSYSTEM_WINDOWS_GUI) std::cout << "  # The Windows graphical user interface (GUI) subsystem\n";
@@ -137,7 +137,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	if (P_NT_HEADER->OptionalHeader.Subsystem & IMAGE_SUBSYSTEM_XBOX) std::cout << "  # XBOX\n";
 	if (P_NT_HEADER->OptionalHeader.Subsystem & IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLICATION) std::cout << "  # Windows boot application\n";
 
-	std::cout << "\nDllCharacteristics: \t\t" << P_NT_HEADER->OptionalHeader.DllCharacteristics << "\n\n"; //Como nao e uma dll e sim um .exe o campo estara ZERADO
+	std::cout << "\nDllCharacteristics: \t\t" << P_NT_HEADER->OptionalHeader.DllCharacteristics << "\n\n"; //Como nao e um .exe o campo estara ZERADO
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA) std::cout << "  # Image can handle a high entropy 64-bit virtual address space\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE) std::cout << "  # DLL can move\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_FORCE_INTEGRITY) std::cout << "  # Code Integrity Image\n";
@@ -150,11 +150,11 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_GUARD_CF) std::cout << "  # Image supports Control Flow Guard\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE) std::cout << "  # Indicate that your application is Remote Desktop Services aware\n";
 
-	std::cout << "SizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n"; //Espaco que sera reservado para a stack ( pilha )
-	std::cout << "SizeOfStackCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackCommit << " B\n"; //Espaco que sera entregue a ela
-	std::cout << "SizeOfHeapReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapReserve << " B\n"; //Espaco que sera entregue a ela
-	std::cout << "SizeOfHeapCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapCommit << " B\n"; //Espaco que sera entregue a ela
-	std::cout << "LoaderFlags: \t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.LoaderFlags << "\n"; //Reservado e ZERADA
+	std::cout << "SizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n"; //Espaco reservado para a stack (pilha)
+	std::cout << "SizeOfStackCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackCommit << " B\n";
+	std::cout << "SizeOfHeapReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapReserve << " B\n"; 
+	std::cout << "SizeOfHeapCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapCommit << " B\n"; 
+	std::cout << "LoaderFlags: \t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.LoaderFlags << "\n";
 	std::cout << "NumberOfRVAandSizes: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.NumberOfRvaAndSizes << " B\n\n\n"; //Numero de entradadas do DataDirectory
 
 
