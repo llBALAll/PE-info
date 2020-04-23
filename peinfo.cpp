@@ -69,11 +69,11 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 
 	std::cout << "Number of Sections: \t\t" << std::dec << P_NT_HEADER->FileHeader.NumberOfSections << "\n";
 
-	char b[20];	{
-		time_t time_date_stamp = P_NT_HEADER->FileHeader.TimeDateStamp;
-		const auto time = localtime(&time_date_stamp);
-		strftime(b, sizeof(b), "%D", time);
-	}
+	char b[20];
+	time_t time_date_stamp = P_NT_HEADER->FileHeader.TimeDateStamp;
+	const auto time = localtime(&time_date_stamp);
+	strftime(b, sizeof(b), "%D", time);
+
 
 	std::cout << "Date Compilation: \t\t" << b << "\n"; //data de compilação do binário
 	std::cout << "Pointer to Symbol Table: \t0x" << std::hex << P_NT_HEADER->FileHeader.PointerToSymbolTable << "\n";
@@ -117,7 +117,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "MajorSubsystemVersion: \t\t" << P_NT_HEADER->OptionalHeader.MajorSubsystemVersion << "\n";
 	std::cout << "MinorSubsystemVersion: \t\t" << P_NT_HEADER->OptionalHeader.MinorSubsystemVersion << "\n";
 	std::cout << "Win32VersionValue: \t\t" << P_NT_HEADER->OptionalHeader.Win32VersionValue << "\n";
-	std::cout << "SizeOfImage: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfImage << " B\n"; //Tamanho total da Image quando carregada na memoria
+	std::cout << "SizeOfImage: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfImage << " B\n"; //Tamanho total da Image carregada na memoria
 	std::cout << "SizeOfHeader: \t\t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeaders << " B\n"; //Tamanho de todos cabecalhos data, code, etc..
 	std::cout << "CheckSum: \t\t\t0x" << std::hex << P_NT_HEADER->OptionalHeader.CheckSum << "\n"; //So e checada se a image for um Driver NT
 
@@ -150,7 +150,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_GUARD_CF) std::cout << "  # Image supports Control Flow Guard\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE) std::cout << "  # Indicate that your application is Remote Desktop Services aware\n";
 
-	std::cout << "SizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n\n"; //Espaco reservado para a stack
+	std::cout << "\nSizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n"; //Espaco reservado para a stack
 	std::cout << "SizeOfStackCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackCommit << " B\n";
 	std::cout << "SizeOfHeapReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapReserve << " B\n"; 
 	std::cout << "SizeOfHeapCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapCommit << " B\n"; 
@@ -162,10 +162,8 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	return 0;
 }
 
-BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
-{
-    switch (fdwReason)
-    {
+BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
+    switch (fdwReason) {
         case DLL_PROCESS_ATTACH:
         	CreateThread(0, 0, &inicializa, 0, 0, 0);
             // attach to process
