@@ -1,6 +1,6 @@
 // inject the dll parser on PE according the binary architecture(x86/x64), and a console will open printing information
 
-#include "peinfo.h"
+#include "peinfo.hpp"
 
 BOOL alocConsole() {
 
@@ -60,12 +60,12 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	std::cout << "-------------------\n";
 	std::cout << " IMAGE_FILE_HEADER \n";
 	std::cout << "-------------------\n";
-	std::cout << "Machine Supports:";
+	std::cout << "Machine Architecture:";
 
 	if (P_NT_HEADER->FileHeader.Machine == IMAGE_FILE_MACHINE_I386)
-		std::cout <<  "\t\tMachine: Intel 386 or later compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
+		std::cout <<  "\t\tIntel 386 or later compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
 	else
-		std::cout << "\t\tMachine: Intel x64 or later compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
+		std::cout << "\t\tIntel x64 or later compatible processors" << "  Offset: 0x" << P_NT_HEADER->FileHeader.Machine << "\n";
 
 	std::cout << "Number of Sections: \t\t" << std::dec << P_NT_HEADER->FileHeader.NumberOfSections << "\n";
 
