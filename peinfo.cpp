@@ -150,7 +150,7 @@ DWORD WINAPI inicializa(LPVOID lpParam) {
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_GUARD_CF) std::cout << "  # Image supports Control Flow Guard\n";
 	if (P_NT_HEADER->OptionalHeader.DllCharacteristics & IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE) std::cout << "  # Indicate that your application is Remote Desktop Services aware\n";
 
-	std::cout << "SizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n"; //Espaco reservado para a stack
+	std::cout << "SizeOfStackReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackReserve << " B\n\n"; //Espaco reservado para a stack
 	std::cout << "SizeOfStackCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfStackCommit << " B\n";
 	std::cout << "SizeOfHeapReserved: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapReserve << " B\n"; 
 	std::cout << "SizeOfHeapCommit: \t\t" << std::dec << P_NT_HEADER->OptionalHeader.SizeOfHeapCommit << " B\n"; 
