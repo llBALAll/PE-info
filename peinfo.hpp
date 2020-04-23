@@ -6,19 +6,18 @@
 #define BUILD_DLL
 
 #ifdef BUILD_DLL
-#define DLL_EXPORT __declspec(dllexport)
+  #define DLL_EXPORT __declspec(dllexport)
 #else
-#define DLL_EXPORT __declspec(dllimport)
+  #define DLL_EXPORT __declspec(dllimport)
 #endif
 
 
 
 #ifdef __cplusplus
-extern "C" {
+  extern "C" {
 #endif
 
 
-
 #ifdef __cplusplus
-}
+  }
 #endif
