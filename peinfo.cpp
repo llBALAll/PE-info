@@ -1,4 +1,4 @@
-// inject the dll parser according the binary architecture(x86/x64)
+// inject the dll parser on PE according the binary architecture(x86/x64), and a console will open a printing information
 
 #include "peinfo.h"
 
